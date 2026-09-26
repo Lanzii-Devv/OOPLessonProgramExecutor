@@ -39,6 +39,8 @@ Partial Class Form1
         VariableNamesToolStripMenuItem = New ToolStripMenuItem()
         LogicalOperatorsToolStripMenuItem = New ToolStripMenuItem()
         ArraysToolStripMenuItem = New ToolStripMenuItem()
+        ArrayExampleToolStripMenuItem = New ToolStripMenuItem()
+        MonthToolStripMenuItem = New ToolStripMenuItem()
         WorkingWithControlsAndPropertiesToolStripMenuItem = New ToolStripMenuItem()
         MidtermExaminationsToolStripMenuItem = New ToolStripMenuItem()
         DebuggingAndTracingToolStripMenuItem = New ToolStripMenuItem()
@@ -152,20 +154,33 @@ Partial Class Form1
         ' VariableNamesToolStripMenuItem
         ' 
         VariableNamesToolStripMenuItem.Name = "VariableNamesToolStripMenuItem"
-        VariableNamesToolStripMenuItem.Size = New Size(180, 22)
+        VariableNamesToolStripMenuItem.Size = New Size(167, 22)
         VariableNamesToolStripMenuItem.Text = "Variable Names"
         ' 
         ' LogicalOperatorsToolStripMenuItem
         ' 
         LogicalOperatorsToolStripMenuItem.Name = "LogicalOperatorsToolStripMenuItem"
-        LogicalOperatorsToolStripMenuItem.Size = New Size(180, 22)
+        LogicalOperatorsToolStripMenuItem.Size = New Size(167, 22)
         LogicalOperatorsToolStripMenuItem.Text = "Logical Operators"
         ' 
         ' ArraysToolStripMenuItem
         ' 
+        ArraysToolStripMenuItem.DropDownItems.AddRange(New ToolStripItem() {ArrayExampleToolStripMenuItem, MonthToolStripMenuItem})
         ArraysToolStripMenuItem.Name = "ArraysToolStripMenuItem"
         ArraysToolStripMenuItem.Size = New Size(384, 34)
         ArraysToolStripMenuItem.Text = "7. Arrays" & vbLf
+        ' 
+        ' ArrayExampleToolStripMenuItem
+        ' 
+        ArrayExampleToolStripMenuItem.Name = "ArrayExampleToolStripMenuItem"
+        ArrayExampleToolStripMenuItem.Size = New Size(180, 22)
+        ArrayExampleToolStripMenuItem.Text = "Array Example"
+        ' 
+        ' MonthToolStripMenuItem
+        ' 
+        MonthToolStripMenuItem.Name = "MonthToolStripMenuItem"
+        MonthToolStripMenuItem.Size = New Size(180, 22)
+        MonthToolStripMenuItem.Text = "Month Listbox"
         ' 
         ' WorkingWithControlsAndPropertiesToolStripMenuItem
         ' 
@@ -311,5 +326,7 @@ Partial Class Form1
     Friend WithEvents VariableNamesToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents LogicalOperatorsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DataHandlingToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents ArrayExampleToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents MonthToolStripMenuItem As ToolStripMenuItem
 
 End Class

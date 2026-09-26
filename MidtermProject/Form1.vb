@@ -74,9 +74,16 @@
 
     End Sub
 
-    Private Sub ArraysToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ArraysToolStripMenuItem.Click
+    Private Sub ArrayExampleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ArrayExampleToolStripMenuItem.Click
 
         Dim Lesson As New ArraysForm()
+        Lesson.Show()
+
+    End Sub
+
+    Private Sub MonthToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MonthToolStripMenuItem.Click
+
+        Dim Lesson As New MonthsListbox()
         Lesson.Show()
 
     End Sub
@@ -94,5 +101,6 @@
         Lesson.Show()
 
     End Sub
+
 
 End Class
