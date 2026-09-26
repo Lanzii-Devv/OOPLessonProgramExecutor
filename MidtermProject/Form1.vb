@@ -46,7 +46,7 @@
 
     End Sub
 
-    Private Sub PrimaryExampleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PrimaryExampleToolStripMenuItem.Click
+    Private Sub DataHandlingToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles DataHandlingToolStripMenuItem1.Click
 
         Dim lesson As New DataHandlingForm()
         lesson.Show()
@@ -60,9 +60,16 @@
 
     End Sub
 
-    Private Sub CodingWithVariablesNameConstantsAndCalculationsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CodingWithVariablesNameConstantsAndCalculationsToolStripMenuItem.Click
+    Private Sub VariableNamesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles VariableNamesToolStripMenuItem.Click
 
         Dim lesson As New CodingWithVariablesNameConstantsAndCalculationsForm()
+        lesson.Show()
+
+    End Sub
+
+    Private Sub LogicalOperatorsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LogicalOperatorsToolStripMenuItem.Click
+
+        Dim lesson As New LogicalOperators()
         lesson.Show()
 
     End Sub

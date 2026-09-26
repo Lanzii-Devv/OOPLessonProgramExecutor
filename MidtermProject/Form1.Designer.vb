@@ -33,9 +33,11 @@ Partial Class Form1
         GettingStartedWithMicrosoftVisualBasicNETToolStripMenuItem = New ToolStripMenuItem()
         PlanningApplicationsAndDesigningInterfacesToolStripMenuItem = New ToolStripMenuItem()
         DataHandlingToolStripMenuItem = New ToolStripMenuItem()
-        PrimaryExampleToolStripMenuItem = New ToolStripMenuItem()
         DifferentDataToolStripMenuItem = New ToolStripMenuItem()
+        DataHandlingToolStripMenuItem1 = New ToolStripMenuItem()
         CodingWithVariablesNameConstantsAndCalculationsToolStripMenuItem = New ToolStripMenuItem()
+        VariableNamesToolStripMenuItem = New ToolStripMenuItem()
+        LogicalOperatorsToolStripMenuItem = New ToolStripMenuItem()
         ArraysToolStripMenuItem = New ToolStripMenuItem()
         WorkingWithControlsAndPropertiesToolStripMenuItem = New ToolStripMenuItem()
         MidtermExaminationsToolStripMenuItem = New ToolStripMenuItem()
@@ -123,16 +125,10 @@ Partial Class Form1
         ' 
         ' DataHandlingToolStripMenuItem
         ' 
-        DataHandlingToolStripMenuItem.DropDownItems.AddRange(New ToolStripItem() {PrimaryExampleToolStripMenuItem, DifferentDataToolStripMenuItem})
+        DataHandlingToolStripMenuItem.DropDownItems.AddRange(New ToolStripItem() {DifferentDataToolStripMenuItem, DataHandlingToolStripMenuItem1})
         DataHandlingToolStripMenuItem.Name = "DataHandlingToolStripMenuItem"
         DataHandlingToolStripMenuItem.Size = New Size(384, 34)
         DataHandlingToolStripMenuItem.Text = "5. Data Handling"
-        ' 
-        ' PrimaryExampleToolStripMenuItem
-        ' 
-        PrimaryExampleToolStripMenuItem.Name = "PrimaryExampleToolStripMenuItem"
-        PrimaryExampleToolStripMenuItem.Size = New Size(276, 22)
-        PrimaryExampleToolStripMenuItem.Text = "Primary Example"
         ' 
         ' DifferentDataToolStripMenuItem
         ' 
@@ -140,11 +136,30 @@ Partial Class Form1
         DifferentDataToolStripMenuItem.Size = New Size(276, 22)
         DifferentDataToolStripMenuItem.Text = "Data Types And Arithmetic Operations"
         ' 
+        ' DataHandlingToolStripMenuItem1
+        ' 
+        DataHandlingToolStripMenuItem1.Name = "DataHandlingToolStripMenuItem1"
+        DataHandlingToolStripMenuItem1.Size = New Size(276, 22)
+        DataHandlingToolStripMenuItem1.Text = "Data Handling"
+        ' 
         ' CodingWithVariablesNameConstantsAndCalculationsToolStripMenuItem
         ' 
+        CodingWithVariablesNameConstantsAndCalculationsToolStripMenuItem.DropDownItems.AddRange(New ToolStripItem() {VariableNamesToolStripMenuItem, LogicalOperatorsToolStripMenuItem})
         CodingWithVariablesNameConstantsAndCalculationsToolStripMenuItem.Name = "CodingWithVariablesNameConstantsAndCalculationsToolStripMenuItem"
         CodingWithVariablesNameConstantsAndCalculationsToolStripMenuItem.Size = New Size(384, 34)
         CodingWithVariablesNameConstantsAndCalculationsToolStripMenuItem.Text = "6. Coding With Variables Name Constants and Calculations"
+        ' 
+        ' VariableNamesToolStripMenuItem
+        ' 
+        VariableNamesToolStripMenuItem.Name = "VariableNamesToolStripMenuItem"
+        VariableNamesToolStripMenuItem.Size = New Size(180, 22)
+        VariableNamesToolStripMenuItem.Text = "Variable Names"
+        ' 
+        ' LogicalOperatorsToolStripMenuItem
+        ' 
+        LogicalOperatorsToolStripMenuItem.Name = "LogicalOperatorsToolStripMenuItem"
+        LogicalOperatorsToolStripMenuItem.Size = New Size(180, 22)
+        LogicalOperatorsToolStripMenuItem.Text = "Logical Operators"
         ' 
         ' ArraysToolStripMenuItem
         ' 
@@ -292,7 +307,9 @@ Partial Class Form1
     Friend WithEvents AnimationToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ExitToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ExitToolStripMenuItem1 As ToolStripMenuItem
-    Friend WithEvents PrimaryExampleToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DifferentDataToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents VariableNamesToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents LogicalOperatorsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents DataHandlingToolStripMenuItem1 As ToolStripMenuItem
 
 End Class

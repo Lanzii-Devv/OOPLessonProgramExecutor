@@ -24,6 +24,8 @@ Partial Class DataTypesAndArithmeticOperations
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(DataTypesAndArithmeticOperations))
         SplitContainer1 = New SplitContainer()
+        rtbCode = New RichTextBox()
+        lblCode = New Label()
         rtbExplanation = New RichTextBox()
         explanation = New Label()
         lblTitle = New Label()
@@ -45,8 +47,6 @@ Partial Class DataTypesAndArithmeticOperations
         rbDouble = New RadioButton()
         rbInteger = New RadioButton()
         lblExecutionTitle = New Label()
-        lblSampleCode = New Label()
-        rtbCode = New RichTextBox()
         CType(SplitContainer1, ComponentModel.ISupportInitialize).BeginInit()
         SplitContainer1.Panel1.SuspendLayout()
         SplitContainer1.Panel2.SuspendLayout()
@@ -64,7 +64,7 @@ Partial Class DataTypesAndArithmeticOperations
         ' SplitContainer1.Panel1
         ' 
         SplitContainer1.Panel1.Controls.Add(rtbCode)
-        SplitContainer1.Panel1.Controls.Add(lblSampleCode)
+        SplitContainer1.Panel1.Controls.Add(lblCode)
         SplitContainer1.Panel1.Controls.Add(rtbExplanation)
         SplitContainer1.Panel1.Controls.Add(explanation)
         SplitContainer1.Panel1.Controls.Add(lblTitle)
@@ -76,6 +76,26 @@ Partial Class DataTypesAndArithmeticOperations
         SplitContainer1.Size = New Size(896, 631)
         SplitContainer1.SplitterDistance = 423
         SplitContainer1.TabIndex = 0
+        ' 
+        ' rtbCode
+        ' 
+        rtbCode.Font = New Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        rtbCode.Location = New Point(12, 315)
+        rtbCode.Name = "rtbCode"
+        rtbCode.ReadOnly = True
+        rtbCode.ScrollBars = RichTextBoxScrollBars.Vertical
+        rtbCode.Size = New Size(393, 209)
+        rtbCode.TabIndex = 4
+        rtbCode.Text = resources.GetString("rtbCode.Text")
+        ' 
+        ' lblCode
+        ' 
+        lblCode.AutoSize = True
+        lblCode.Location = New Point(12, 293)
+        lblCode.Name = "lblCode"
+        lblCode.Size = New Size(77, 15)
+        lblCode.TabIndex = 3
+        lblCode.Text = "Sample Code"
         ' 
         ' rtbExplanation
         ' 
@@ -293,26 +313,6 @@ Partial Class DataTypesAndArithmeticOperations
         lblExecutionTitle.TabIndex = 0
         lblExecutionTitle.Text = "Execution Example"
         ' 
-        ' lblSampleCode
-        ' 
-        lblSampleCode.AutoSize = True
-        lblSampleCode.Location = New Point(12, 293)
-        lblSampleCode.Name = "lblSampleCode"
-        lblSampleCode.Size = New Size(77, 15)
-        lblSampleCode.TabIndex = 3
-        lblSampleCode.Text = "Sample Code"
-        ' 
-        ' rtbCode
-        ' 
-        rtbCode.Font = New Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        rtbCode.Location = New Point(12, 315)
-        rtbCode.Name = "rtbCode"
-        rtbCode.ReadOnly = True
-        rtbCode.ScrollBars = RichTextBoxScrollBars.Vertical
-        rtbCode.Size = New Size(393, 209)
-        rtbCode.TabIndex = 4
-        rtbCode.Text = resources.GetString("rtbCode.Text")
-        ' 
         ' DataTypesAndArithmeticOperations
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -357,5 +357,5 @@ Partial Class DataTypesAndArithmeticOperations
     Friend WithEvents rbAdd As RadioButton
     Friend WithEvents lblResult As Label
     Friend WithEvents rtbCode As RichTextBox
-    Friend WithEvents lblSampleCode As Label
+    Friend WithEvents lblCode As Label
 End Class
