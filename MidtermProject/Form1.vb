@@ -102,5 +102,17 @@
 
     End Sub
 
+    Private Sub TheRoyalRoadDilemmaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TheRoyalRoadDilemmaToolStripMenuItem.Click
 
+        Dim Lesson As New TheRoyalRoadDilemma()
+        Lesson.Show()
+
+    End Sub
+
+    Private Sub TheReunionGameToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TheReunionGameToolStripMenuItem.Click
+
+        Dim Lesson As New TheReunionGame()
+        Lesson.Show()
+
+    End Sub
 End Class

@@ -53,10 +53,12 @@ Partial Class Form1
         PresentationToolStripMenuItem1 = New ToolStripMenuItem()
         FinalExaminationToolStripMenuItem = New ToolStripMenuItem()
         AnimationToolStripMenuItem = New ToolStripMenuItem()
+        TheRoyalRoadDilemmaToolStripMenuItem = New ToolStripMenuItem()
         ExitToolStripMenuItem = New ToolStripMenuItem()
         ExitToolStripMenuItem1 = New ToolStripMenuItem()
         HelpToolStripMenuItem = New ToolStripMenuItem()
         BSIT2EToolStripMenuItem = New ToolStripMenuItem()
+        TheReunionGameToolStripMenuItem = New ToolStripMenuItem()
         MenuStrip1.SuspendLayout()
         SuspendLayout()
         ' 
@@ -173,13 +175,13 @@ Partial Class Form1
         ' ArrayExampleToolStripMenuItem
         ' 
         ArrayExampleToolStripMenuItem.Name = "ArrayExampleToolStripMenuItem"
-        ArrayExampleToolStripMenuItem.Size = New Size(180, 22)
+        ArrayExampleToolStripMenuItem.Size = New Size(150, 22)
         ArrayExampleToolStripMenuItem.Text = "Array Example"
         ' 
         ' MonthToolStripMenuItem
         ' 
         MonthToolStripMenuItem.Name = "MonthToolStripMenuItem"
-        MonthToolStripMenuItem.Size = New Size(180, 22)
+        MonthToolStripMenuItem.Size = New Size(150, 22)
         MonthToolStripMenuItem.Text = "Month Listbox"
         ' 
         ' WorkingWithControlsAndPropertiesToolStripMenuItem
@@ -250,9 +252,16 @@ Partial Class Form1
         ' 
         ' AnimationToolStripMenuItem
         ' 
+        AnimationToolStripMenuItem.DropDownItems.AddRange(New ToolStripItem() {TheRoyalRoadDilemmaToolStripMenuItem, TheReunionGameToolStripMenuItem})
         AnimationToolStripMenuItem.Name = "AnimationToolStripMenuItem"
         AnimationToolStripMenuItem.Size = New Size(384, 34)
         AnimationToolStripMenuItem.Text = "19. Animation"
+        ' 
+        ' TheRoyalRoadDilemmaToolStripMenuItem
+        ' 
+        TheRoyalRoadDilemmaToolStripMenuItem.Name = "TheRoyalRoadDilemmaToolStripMenuItem"
+        TheRoyalRoadDilemmaToolStripMenuItem.Size = New Size(207, 22)
+        TheRoyalRoadDilemmaToolStripMenuItem.Text = "The Royal Road Dilemma"
         ' 
         ' ExitToolStripMenuItem
         ' 
@@ -277,6 +286,12 @@ Partial Class Form1
         BSIT2EToolStripMenuItem.Name = "BSIT2EToolStripMenuItem"
         BSIT2EToolStripMenuItem.Size = New Size(54, 20)
         BSIT2EToolStripMenuItem.Text = "BSIT2E"
+        ' 
+        ' TheReunionGameToolStripMenuItem
+        ' 
+        TheReunionGameToolStripMenuItem.Name = "TheReunionGameToolStripMenuItem"
+        TheReunionGameToolStripMenuItem.Size = New Size(207, 22)
+        TheReunionGameToolStripMenuItem.Text = "The Reunion Game"
         ' 
         ' Form1
         ' 
@@ -328,5 +343,7 @@ Partial Class Form1
     Friend WithEvents DataHandlingToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents ArrayExampleToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MonthToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents TheRoyalRoadDilemmaToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents TheReunionGameToolStripMenuItem As ToolStripMenuItem
 
 End Class
