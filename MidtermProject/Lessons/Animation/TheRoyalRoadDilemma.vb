@@ -1,6 +1,28 @@
 ﻿Imports System.Drawing.Drawing2D
 Imports System.Linq
 
+' =====================================================================
+'  THE ROYAL ROAD DILEMMA
+'  A medieval twist on "Missionaries and Cannibals" (Windows Forms)
+'
+'  HOW TO RUN:
+'   1. Visual Studio > New Project > "Windows Forms App (.NET Framework)" (VB)
+'   2. Open Form1.vb and replace ALL of its code with this file.
+'      (Keep Form1.Designer.vb as it is - every control is built in code.)
+'   3. Press F5.
+'
+'  HOW IT WORKS (the big ideas):
+'   - ONE panel paints the scenery (GDI+). Which "page" is drawn depends on
+'     the variable `cur` (Home / Help / Play / Result).
+'   - Each lady is a PictureBox placed on that panel. Her image is drawn in
+'     code (MakeSprite), and the timer moves the PictureBox's Location.
+'     Clicking a lady fires her PictureBox's Click event.
+'   - tmrAnim (30 ms) = animation loop: moves the carriage, spins wheels,
+'     slides the ladies, drifts the clouds, then asks the panel to repaint.
+'   - tmrClock (1 s)  = the game stopwatch used for scoring.
+'   - The puzzle state is just: which side (0 left, 1 right, 2 on carriage)
+'     each of the 6 ladies is on, and which side the carriage is on.
+' =====================================================================
 Public Class TheRoyalRoadDilemma
 
     Private Enum Pg
@@ -10,20 +32,25 @@ Public Class TheRoyalRoadDilemma
         Result = 3
     End Enum
 
+    ' One lady. Side: 0 = Castle Keep, 1 = Village Market, 2 = on the carriage
     Private Class Person
         Public IsWife As Boolean
         Public Side As Integer
-        Public X, Y, TX, TY As Single
+        Public X, Y, TX, TY As Single   ' current position and target position
+        Public Box As PictureBox        ' the on-screen sprite for this lady
     End Class
 
+    ' ---------- constants ----------
     Private Const LeftDock As Single = 230
     Private Const RightDock As Single = 490
     Private Const CarW As Single = 180
     Private Const OptimalMoves As Integer = 11
 
+    ' ---------- timers ----------
     Private WithEvents tmrAnim As New System.Windows.Forms.Timer With {.Interval = 30}
     Private WithEvents tmrClock As New System.Windows.Forms.Timer With {.Interval = 1000}
 
+    ' ---------- state ----------
     Private scene As BufferedPanel
     Private cur As Pg = Pg.Home
     Private people As New List(Of Person)
@@ -37,16 +64,21 @@ Public Class TheRoyalRoadDilemma
     Private homeX As Single = -200
     Private rnd As New Random()
 
+    ' result screen data
     Private score As Integer
     Private rankTitle, rankNote, rankNum As String
     Private rankColor As Color
 
+    ' fonts
     Private ReadOnly fTitle As New Font("Georgia", 34, FontStyle.Bold)
     Private ReadOnly fBig As New Font("Georgia", 22, FontStyle.Bold)
     Private ReadOnly fMid As New Font("Georgia", 13, FontStyle.Bold)
     Private ReadOnly fSm As New Font("Georgia", 10, FontStyle.Bold)
     Private ReadOnly fTxt As New Font("Georgia", 10.5F)
 
+    ' =================================================================
+    '  SET-UP
+    ' =================================================================
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Text = "The Royal Road Dilemma"
         FormBorderStyle = FormBorderStyle.FixedSingle
@@ -57,7 +89,6 @@ Public Class TheRoyalRoadDilemma
         scene = New BufferedPanel With {.Dock = DockStyle.Fill}
         Controls.Add(scene)
         AddHandler scene.Paint, AddressOf DrawScene
-        AddHandler scene.MouseClick, AddressOf SceneClick
 
         MakeBtn("Begin Journey", 350, 170, 200, Pg.Home, Sub() StartGame())
         MakeBtn("How to Play", 350, 218, 200, Pg.Home, Sub() SetScreen(Pg.Help))
@@ -86,10 +117,13 @@ Public Class TheRoyalRoadDilemma
         Return b
     End Function
 
+    ' Show only the controls that belong to the chosen page
     Private Sub SetScreen(p As Pg)
         cur = p
         For Each c As Control In scene.Controls
-            c.Visible = (CInt(c.Tag) = CInt(p))
+            If c.Tag IsNot Nothing Then
+                c.Visible = (CInt(c.Tag) = CInt(p))
+            End If
         Next
     End Sub
 
@@ -100,27 +134,48 @@ Public Class TheRoyalRoadDilemma
         SetScreen(Pg.Play)
     End Sub
 
+    ' Puts everybody back at the Castle Keep. Time and scandals are kept.
     Private Sub RetryPuzzle()
-        people.Clear()
-        For i = 1 To 3 : people.Add(New Person With {.IsWife = True}) : Next
-        For i = 1 To 3 : people.Add(New Person With {.IsWife = False}) : Next
+        ClearPeople()
+        For i = 1 To 3 : AddPerson(True) : Next
+        For i = 1 To 3 : AddPerson(False) : Next
         carSide = 0 : carX = LeftDock : facing = 1
         moving = False : failed = False : won = False : moves = 0
         Retarget()
-        For Each p As Person In people
-            p.X = p.TX : p.Y = p.TY
+        For Each P As Person In people
+            P.X = P.TX : P.Y = P.TY : Place(P)
         Next
         message = "Click a lady to seat her in the carriage, then press Drive Carriage."
     End Sub
 
+    ' =================================================================
+    '  GAME RULES
+    ' =================================================================
+    ' A scandal happens on a side when mistresses outnumber wives AND at least
+    ' one wife is there. withCar = count the parked carriage's passengers too.
     Private Function Scandal(side As Integer, withCar As Boolean) As Boolean
         Dim w = 0, m = 0
-        For Each p As Person In people
-            If p.Side = side OrElse (withCar AndAlso p.Side = 2 AndAlso carSide = side) Then
-                If p.IsWife Then w += 1 Else m += 1
+        For Each P As Person In people
+            If P.Side = side OrElse (withCar AndAlso P.Side = 2 AndAlso carSide = side) Then
+                If P.IsWife Then w += 1 Else m += 1
             End If
         Next
         Return w > 0 AndAlso m > w
+    End Function
+
+    Private Function CountOnCarriage() As Integer
+        Dim n = 0
+        For Each P As Person In people
+            If P.Side = 2 Then n += 1
+        Next
+        Return n
+    End Function
+
+    Private Function AllLeftCastle() As Boolean
+        For Each P As Person In people
+            If P.Side = 0 Then Return False
+        Next
+        Return True
     End Function
 
     Private Sub DriveCarriage()
@@ -129,20 +184,13 @@ Public Class TheRoyalRoadDilemma
             message = "Someone must drive! Seat at least one lady first."
             Return
         End If
+        ' The side we are leaving no longer has the passengers on it
         If Scandal(carSide, False) Then Fail(carSide) : Return
         facing = If(carSide = 0, 1, -1)
         moving = True
         moves += 1
         message = "The carriage rolls along the road..."
     End Sub
-
-    Private Function CountOnCarriage() As Integer
-        Dim n = 0
-        For Each p As Person In people
-            If p.Side = 2 Then n += 1
-        Next
-        Return n
-    End Function
 
     Private Sub Arrive()
         If Scandal(0, True) Then Fail(0) : Return
@@ -167,13 +215,7 @@ Public Class TheRoyalRoadDilemma
         End If
     End Sub
 
-    Private Function AllLeftCastle() As Boolean
-        For Each p As Person In people
-            If p.Side = 0 Then Return False
-        Next
-        Return True
-    End Function
-
+    ' Evaluation: rank titles instead of stars
     Private Sub ShowResult()
         Dim extra = Math.Max(0, moves - OptimalMoves)
         score = Math.Max(0, 1000 - extra * 40 - scandals * 75 - Math.Max(0, seconds - 120))
@@ -197,13 +239,54 @@ Public Class TheRoyalRoadDilemma
         SetScreen(Pg.Result)
     End Sub
 
-    Private Sub SceneClick(sender As Object, e As MouseEventArgs)
-        If cur <> Pg.Play OrElse moving OrElse failed OrElse won Then Return
-        Dim hit As Person = Nothing
-        For Each p As Person In people
-            If New RectangleF(p.X, p.Y - 12, 40, 82).Contains(e.X, e.Y) Then hit = p
+    ' =================================================================
+    '  INPUT
+    ' =================================================================
+    ' Each lady is a real PictureBox control sitting on top of the scene panel.
+    Private Sub ClearPeople()
+        For Each P As Person In people
+            scene.Controls.Remove(P.Box)
+            If P.Box.Image IsNot Nothing Then P.Box.Image.Dispose()
+            P.Box.Dispose()
         Next
-        If hit Is Nothing Then Return
+        people.Clear()
+    End Sub
+
+    Private Sub AddPerson(isWife As Boolean)
+        Dim pr As New Person With {.IsWife = isWife}
+        pr.Box = New PictureBox With {
+            .Size = New Size(40, 82),
+            .BackColor = Color.Transparent,
+            .Image = MakeSprite(isWife),
+            .Cursor = Cursors.Hand,
+            .Tag = CInt(Pg.Play),
+            .Visible = (cur = Pg.Play)}
+        Dim captured As Person = pr
+        AddHandler pr.Box.Click, Sub() PersonClicked(captured)
+        scene.Controls.Add(pr.Box)
+        pr.Box.BringToFront()
+        people.Add(pr)
+    End Sub
+
+    ' Moves the PictureBox to the lady's current (animated) position
+    Private Sub Place(pr As Person)
+        pr.Box.Location = New Point(CInt(pr.X), CInt(pr.Y) - 12)
+    End Sub
+
+    ' Draws one lady onto a transparent bitmap, used as the PictureBox image
+    Private Function MakeSprite(isWife As Boolean) As Bitmap
+        Dim bmp As New Bitmap(40, 82)
+        Using g = Graphics.FromImage(bmp)
+            g.SmoothingMode = SmoothingMode.AntiAlias
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit
+            Dim temp As New Person With {.IsWife = isWife, .X = 0, .Y = 12}
+            DrawPerson(g, temp)
+        End Using
+        Return bmp
+    End Function
+
+    Private Sub PersonClicked(hit As Person)
+        If cur <> Pg.Play OrElse moving OrElse failed OrElse won Then Return
 
         If hit.Side = 2 Then
             hit.Side = carSide
@@ -219,6 +302,9 @@ Public Class TheRoyalRoadDilemma
         CheckWin()
     End Sub
 
+    ' =================================================================
+    '  TIMERS
+    ' =================================================================
     Private Sub tmrClock_Tick(sender As Object, e As EventArgs) Handles tmrClock.Tick
         If cur = Pg.Play AndAlso Not failed AndAlso Not won Then seconds += 1
     End Sub
@@ -245,14 +331,15 @@ Public Class TheRoyalRoadDilemma
             End If
 
             Retarget()
-            For Each p As Person In people
-                If moving AndAlso p.Side = 2 Then
-                    p.X = p.TX
-                    p.Y = p.TY + CSng(Math.Sin(tick * 0.9)) * 2
+            For Each P As Person In people
+                If moving AndAlso P.Side = 2 Then
+                    P.X = P.TX
+                    P.Y = P.TY + CSng(Math.Sin(tick * 0.9)) * 2   ' bumpy ride
                 Else
-                    p.X += (p.TX - p.X) * 0.25F
-                    p.Y += (p.TY - p.Y) * 0.25F
+                    P.X += (P.TX - P.X) * 0.25F
+                    P.Y += (P.TY - P.Y) * 0.25F
                 End If
+                Place(P)
             Next
 
             If shake > 0 Then shake -= 1
@@ -268,17 +355,18 @@ Public Class TheRoyalRoadDilemma
         scene.Invalidate()
     End Sub
 
+    ' Works out where each lady SHOULD be standing (the animation slides her there)
     Private Sub Retarget()
         Dim cnt(1, 1) As Integer
         Dim seat = 0
-        For Each p As Person In people
-            If p.Side = 2 Then
-                p.TX = SeatX(seat) : p.TY = 312 : seat += 1
+        For Each P As Person In people
+            If P.Side = 2 Then
+                P.TX = SeatX(seat) : P.TY = 312 : seat += 1
             Else
-                Dim row = If(p.IsWife, 0, 1)
-                p.TX = If(p.Side = 0, 15, 690) + cnt(p.Side, row) * 65
-                p.TY = If(p.IsWife, 205, 272)
-                cnt(p.Side, row) += 1
+                Dim row = If(P.IsWife, 0, 1)
+                P.TX = If(P.Side = 0, 15, 690) + cnt(P.Side, row) * 65
+                P.TY = If(P.IsWife, 205, 272)
+                cnt(P.Side, row) += 1
             End If
         Next
     End Sub
@@ -287,6 +375,9 @@ Public Class TheRoyalRoadDilemma
         Return If(facing = 1, carX + 10 + i * 45, carX + CarW - 50 - i * 45)
     End Function
 
+    ' =================================================================
+    '  DRAWING
+    ' =================================================================
     Private Sub DrawScene(sender As Object, e As PaintEventArgs)
         Dim g = e.Graphics
         g.SmoothingMode = SmoothingMode.AntiAlias
@@ -300,6 +391,7 @@ Public Class TheRoyalRoadDilemma
         End Select
     End Sub
 
+    ' --- small drawing helpers (each makes and disposes its own brush) ---
     Private Sub FR(g As Graphics, c As Color, x As Single, y As Single, w As Single, h As Single)
         Using b As New SolidBrush(c) : g.FillRectangle(b, x, y, w, h) : End Using
     End Sub
@@ -323,20 +415,21 @@ Public Class TheRoyalRoadDilemma
         Using sky As New LinearGradientBrush(New Rectangle(0, 0, 900, 260), Color.FromArgb(120, 180, 235), Color.FromArgb(255, 230, 190), 90.0F)
             g.FillRectangle(sky, 0, 0, 900, 260)
         End Using
-        FE(g, Color.FromArgb(255, 235, 140), 740, 40, 70, 70)
-        For i = 0 To 2
+        FE(g, Color.FromArgb(255, 235, 140), 740, 40, 70, 70)                      ' sun
+        For i = 0 To 2                                                              ' drifting clouds
             Dim x = ((cloudX + i * 380) Mod 1100) - 150
             FE(g, Color.FromArgb(210, 255, 255, 255), x, 60 + i * 26, 90, 30)
             FE(g, Color.FromArgb(210, 255, 255, 255), x + 25, 48 + i * 26, 60, 34)
         Next
-        FE(g, Color.FromArgb(110, 160, 110), -100, 190, 600, 140)
+        FE(g, Color.FromArgb(110, 160, 110), -100, 190, 600, 140)                  ' hills
         FE(g, Color.FromArgb(95, 150, 100), 350, 200, 700, 130)
-        FR(g, Color.FromArgb(105, 170, 80), 0, 250, 900, 190)
-        FR(g, Color.FromArgb(150, 115, 75), 0, 340, 900, 80)
+        FR(g, Color.FromArgb(105, 170, 80), 0, 250, 900, 190)                      ' grass
+        FR(g, Color.FromArgb(150, 115, 75), 0, 340, 900, 80)                       ' the road
         FR(g, Color.FromArgb(110, 80, 50), 0, 340, 900, 4)
         FR(g, Color.FromArgb(110, 80, 50), 0, 416, 900, 4)
         For x = 0 To 900 Step 70 : FR(g, Color.FromArgb(172, 138, 98), x, 380, 30, 5) : Next
 
+        ' Castle Keep (left)
         Dim stone = Color.FromArgb(150, 150, 165), dark = Color.FromArgb(115, 115, 130)
         FR(g, stone, 10, 100, 150, 130)
         FR(g, dark, 0, 70, 40, 160) : FR(g, dark, 130, 70, 40, 160)
@@ -345,11 +438,13 @@ Public Class TheRoyalRoadDilemma
         FR(g, Color.Black, 19, 28, 3, 30)
         FP(g, Color.Firebrick, P(22, 28), P(42, 35), P(22, 42))
 
+        ' Village Market (right)
         FR(g, Color.Cornsilk, 705, 150, 70, 80) : FP(g, Color.Firebrick, P(697, 150), P(740, 108), P(783, 150))
         FR(g, Color.FromArgb(70, 45, 25), 730, 190, 20, 40)
         FR(g, Color.Cornsilk, 800, 170, 70, 60) : FP(g, Color.SaddleBrown, P(792, 170), P(835, 135), P(878, 170))
         FR(g, Color.FromArgb(70, 45, 25), 825, 195, 20, 35)
 
+        ' bottom wooden bar
         FR(g, Color.FromArgb(60, 40, 25), 0, 440, 900, 120)
         FR(g, Color.Gold, 0, 440, 900, 3)
     End Sub
@@ -390,36 +485,32 @@ Public Class TheRoyalRoadDilemma
         Txt(g, "CASTLE KEEP", fSm, Color.White, 10, 422, 200, 18, False)
         Txt(g, "VILLAGE MARKET", fSm, Color.White, 690, 422, 200, 18, False)
 
-        DrawCarriage(g, carX, facing)
-        For Each p As Person In people : DrawPerson(g, p) : Next
-        Dim fx = If(facing = 1, carX, carX + CarW - 110)
-        FR(g, Color.FromArgb(130, 85, 45), fx, 352, 110, 30)
-        FR(g, Color.FromArgb(90, 55, 25), fx, 352, 110, 3)
+        DrawCarriage(g, carX, facing)   ' the ladies are PictureBox controls drawn on top
 
         Txt(g, message, fMid, Color.Cornsilk, 20, 452, 860, 44)
 
         If failed Then
-            FR(g, Color.FromArgb(225, 130, 20, 20), 150, 140, 600, 90)
-            Txt(g, "SCANDAL!", fBig, Color.White, 150, 150, 600, 36)
-            Txt(g, "The mistresses outnumbered the wives.", fMid, Color.White, 150, 192, 600, 28)
+            FR(g, Color.FromArgb(225, 130, 20, 20), 150, 100, 600, 85)
+            Txt(g, "SCANDAL!", fBig, Color.White, 150, 108, 600, 36)
+            Txt(g, "The mistresses outnumbered the wives.", fMid, Color.White, 150, 148, 600, 28)
         ElseIf won Then
-            FR(g, Color.FromArgb(225, 30, 100, 40), 150, 140, 600, 80)
-            Txt(g, "The whole court has crossed!", fBig, Color.White, 150, 165, 600, 40)
+            FR(g, Color.FromArgb(225, 30, 100, 40), 150, 100, 600, 75)
+            Txt(g, "The whole court has crossed!", fBig, Color.White, 150, 122, 600, 40)
         End If
     End Sub
 
     Private Sub DrawPerson(g As Graphics, pr As Person)
         Dim x = pr.X, y = pr.Y
         Dim dress = If(pr.IsWife, Color.FromArgb(110, 60, 160), Color.FromArgb(200, 35, 70))
-        If Not pr.IsWife Then FE(g, Color.FromArgb(150, 70, 30), x + 8, y + 1, 24, 30)
+        If Not pr.IsWife Then FE(g, Color.FromArgb(150, 70, 30), x + 8, y + 1, 24, 30)   ' flowing hair
         FP(g, dress, P(x + 20, y + 22), P(x + 38, y + 70), P(x + 2, y + 70))
         FR(g, Color.FromArgb(235, 200, 160), x + 17, y + 20, 6, 6)
         FE(g, Color.FromArgb(245, 215, 175), x + 11, y + 3, 18, 20)
         FE(g, Color.Black, x + 16, y + 12, 2, 2) : FE(g, Color.Black, x + 22, y + 12, 2, 2)
         If pr.IsWife Then
-            FP(g, Color.Gold, P(x + 11, y + 8), P(x + 20, y - 12), P(x + 29, y + 8))
+            FP(g, Color.Gold, P(x + 11, y + 8), P(x + 20, y - 12), P(x + 29, y + 8))   ' tall hennin hat
         Else
-            FE(g, Color.HotPink, x + 26, y + 5, 9, 9)
+            FE(g, Color.HotPink, x + 26, y + 5, 9, 9)                                   ' flower
         End If
         Txt(g, If(pr.IsWife, "W", "M"), fSm, Color.White, x, y + 46, 40, 16)
     End Sub
@@ -435,16 +526,18 @@ Public Class TheRoyalRoadDilemma
         End If
         Dim wood = Color.FromArgb(120, 75, 40)
 
+        ' cab: canopy, posts and floor
         FR(g, wood, 4, 298, 5, 54) : FR(g, wood, 101, 298, 5, 54)
         FR(g, wood, 0, 350, 110, 32)
         FP(g, Color.Firebrick, P(-6, 298), P(116, 298), P(100, 278), P(10, 278))
+        ' hitch + horse
         FR(g, wood, 110, 362, 18, 4)
         FE(g, Color.FromArgb(120, 80, 50), 118, 336, 40, 26)
         FP(g, Color.FromArgb(120, 80, 50), P(148, 342), P(158, 316), P(170, 320), P(158, 346))
         FE(g, Color.FromArgb(120, 80, 50), 158, 312, 20, 12)
         FE(g, Color.Black, 170, 314, 3, 3)
         Using pn As New Pen(Color.FromArgb(90, 55, 25), 4)
-            g.DrawLine(pn, 119, 344, 108, 364)
+            g.DrawLine(pn, 119, 344, 108, 364)   ' tail
             For k = 0 To 3
                 Dim legX As Single = {126, 134, 148, 154}(k)
                 Dim swing = If(rolling, CSng(Math.Sin(wheelAngle * 1.5 + k * Math.PI / 2)) * 8, 0.0F)
@@ -485,6 +578,7 @@ Public Class TheRoyalRoadDilemma
         Using pn As New Pen(brown, 2) : g.DrawRectangle(pn, 340, 330, 420, 22) : End Using
     End Sub
 
+    ' A scalloped wax seal with the rank numeral
     Private Sub DrawSeal(g As Graphics, cx As Single, cy As Single, r As Single)
         Dim pts(63) As PointF
         For i = 0 To 63
@@ -501,6 +595,7 @@ Public Class TheRoyalRoadDilemma
 
 End Class
 
+' A Panel with double-buffering turned on so the animation doesn't flicker
 Friend Class BufferedPanel
     Inherits Panel
     Public Sub New()
