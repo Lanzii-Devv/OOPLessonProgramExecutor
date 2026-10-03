@@ -61,6 +61,7 @@ Partial Class Form1
         ExitToolStripMenuItem1 = New ToolStripMenuItem()
         HelpToolStripMenuItem = New ToolStripMenuItem()
         BSIT2EToolStripMenuItem = New ToolStripMenuItem()
+        ConquerTheLandsToolStripMenuItem = New ToolStripMenuItem()
         MenuStrip1.SuspendLayout()
         SuspendLayout()
         ' 
@@ -267,7 +268,7 @@ Partial Class Form1
         ' 
         ' AnimationToolStripMenuItem
         ' 
-        AnimationToolStripMenuItem.DropDownItems.AddRange(New ToolStripItem() {TheRoyalRoadDilemmaToolStripMenuItem, TheReunionGameToolStripMenuItem})
+        AnimationToolStripMenuItem.DropDownItems.AddRange(New ToolStripItem() {TheRoyalRoadDilemmaToolStripMenuItem, TheReunionGameToolStripMenuItem, ConquerTheLandsToolStripMenuItem})
         AnimationToolStripMenuItem.Name = "AnimationToolStripMenuItem"
         AnimationToolStripMenuItem.Size = New Size(384, 34)
         AnimationToolStripMenuItem.Text = "19. Animation"
@@ -308,14 +309,20 @@ Partial Class Form1
         BSIT2EToolStripMenuItem.Size = New Size(54, 20)
         BSIT2EToolStripMenuItem.Text = "BSIT2E"
         ' 
-        ' Form1
+        ' ConquerTheLandsToolStripMenuItem
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
+        ConquerTheLandsToolStripMenuItem.Name = "ConquerTheLandsToolStripMenuItem"
+        ConquerTheLandsToolStripMenuItem.Size = New Size(207, 22)
+        ConquerTheLandsToolStripMenuItem.Text = "Conquer The lands"
+        ' 
+        ' ConquerTheLands
+        ' 
+        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(1362, 899)
         Controls.Add(MenuStrip1)
         MainMenuStrip = MenuStrip1
-        Name = "Form1"
+        Name = "ConquerTheLands"
         Text = "Form1"
         MenuStrip1.ResumeLayout(False)
         MenuStrip1.PerformLayout()
@@ -362,5 +369,6 @@ Partial Class Form1
     Friend WithEvents TheReunionGameToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ControlSampleToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents TextPropertiesManipulatorToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ConquerTheLandsToolStripMenuItem As ToolStripMenuItem
 
 End Class

@@ -129,4 +129,10 @@
 
     End Sub
 
+    Private Sub ConquerTheLandsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConquerTheLandsToolStripMenuItem.Click
+
+        Dim Lesson As New ConquerTheLands()
+        Lesson.Show()
+
+    End Sub
 End Class
