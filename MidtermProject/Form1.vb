@@ -1,5 +1,11 @@
 ﻿Public Class Form1
 
+    Private Sub IntroductionToOOPToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles IntroductionToOOPToolStripMenuItem.Click
+
+        Dim Lesson As New Orientation()
+        Lesson.Show()
+
+    End Sub
     Private Sub ExitToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem1.Click
         Me.Close()
     End Sub
@@ -88,13 +94,6 @@
 
     End Sub
 
-    Private Sub WorkingWithControlsAndPropertiesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WorkingWithControlsAndPropertiesToolStripMenuItem.Click
-
-        Dim Lesson As New WorkingWithControlsAndPropertiesForm()
-        Lesson.Show()
-
-    End Sub
-
     Private Sub DebuggingAndTracingToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DebuggingAndTracingToolStripMenuItem.Click
 
         Dim Lesson As New DebuggingAndTracingForm()
@@ -115,4 +114,19 @@
         Lesson.Show()
 
     End Sub
+
+    Private Sub ControlSampleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ControlSampleToolStripMenuItem.Click
+
+        Dim Lesson As New WorkingWithControlsAndPropertiesForm()
+        Lesson.Show()
+
+    End Sub
+
+    Private Sub TextPropertiesManipulatorToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TextPropertiesManipulatorToolStripMenuItem.Click
+
+        Dim Lesson As New TextPropertiesManipulator()
+        Lesson.Show()
+
+    End Sub
+
 End Class

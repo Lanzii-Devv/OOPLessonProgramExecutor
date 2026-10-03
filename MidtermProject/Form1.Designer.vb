@@ -42,6 +42,8 @@ Partial Class Form1
         ArrayExampleToolStripMenuItem = New ToolStripMenuItem()
         MonthToolStripMenuItem = New ToolStripMenuItem()
         WorkingWithControlsAndPropertiesToolStripMenuItem = New ToolStripMenuItem()
+        ControlSampleToolStripMenuItem = New ToolStripMenuItem()
+        TextPropertiesManipulatorToolStripMenuItem = New ToolStripMenuItem()
         MidtermExaminationsToolStripMenuItem = New ToolStripMenuItem()
         DebuggingAndTracingToolStripMenuItem = New ToolStripMenuItem()
         WorkingWithNETFrameworkAndMDIToolStripMenuItem = New ToolStripMenuItem()
@@ -54,11 +56,11 @@ Partial Class Form1
         FinalExaminationToolStripMenuItem = New ToolStripMenuItem()
         AnimationToolStripMenuItem = New ToolStripMenuItem()
         TheRoyalRoadDilemmaToolStripMenuItem = New ToolStripMenuItem()
+        TheReunionGameToolStripMenuItem = New ToolStripMenuItem()
         ExitToolStripMenuItem = New ToolStripMenuItem()
         ExitToolStripMenuItem1 = New ToolStripMenuItem()
         HelpToolStripMenuItem = New ToolStripMenuItem()
         BSIT2EToolStripMenuItem = New ToolStripMenuItem()
-        TheReunionGameToolStripMenuItem = New ToolStripMenuItem()
         MenuStrip1.SuspendLayout()
         SuspendLayout()
         ' 
@@ -186,9 +188,22 @@ Partial Class Form1
         ' 
         ' WorkingWithControlsAndPropertiesToolStripMenuItem
         ' 
+        WorkingWithControlsAndPropertiesToolStripMenuItem.DropDownItems.AddRange(New ToolStripItem() {ControlSampleToolStripMenuItem, TextPropertiesManipulatorToolStripMenuItem})
         WorkingWithControlsAndPropertiesToolStripMenuItem.Name = "WorkingWithControlsAndPropertiesToolStripMenuItem"
         WorkingWithControlsAndPropertiesToolStripMenuItem.Size = New Size(384, 34)
         WorkingWithControlsAndPropertiesToolStripMenuItem.Text = "8. Working With Controls and Properties"
+        ' 
+        ' ControlSampleToolStripMenuItem
+        ' 
+        ControlSampleToolStripMenuItem.Name = "ControlSampleToolStripMenuItem"
+        ControlSampleToolStripMenuItem.Size = New Size(219, 22)
+        ControlSampleToolStripMenuItem.Text = "Control Sample"
+        ' 
+        ' TextPropertiesManipulatorToolStripMenuItem
+        ' 
+        TextPropertiesManipulatorToolStripMenuItem.Name = "TextPropertiesManipulatorToolStripMenuItem"
+        TextPropertiesManipulatorToolStripMenuItem.Size = New Size(219, 22)
+        TextPropertiesManipulatorToolStripMenuItem.Text = "Text Properties Manipulator"
         ' 
         ' MidtermExaminationsToolStripMenuItem
         ' 
@@ -263,6 +278,12 @@ Partial Class Form1
         TheRoyalRoadDilemmaToolStripMenuItem.Size = New Size(207, 22)
         TheRoyalRoadDilemmaToolStripMenuItem.Text = "The Royal Road Dilemma"
         ' 
+        ' TheReunionGameToolStripMenuItem
+        ' 
+        TheReunionGameToolStripMenuItem.Name = "TheReunionGameToolStripMenuItem"
+        TheReunionGameToolStripMenuItem.Size = New Size(207, 22)
+        TheReunionGameToolStripMenuItem.Text = "The Reunion Game"
+        ' 
         ' ExitToolStripMenuItem
         ' 
         ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
@@ -286,12 +307,6 @@ Partial Class Form1
         BSIT2EToolStripMenuItem.Name = "BSIT2EToolStripMenuItem"
         BSIT2EToolStripMenuItem.Size = New Size(54, 20)
         BSIT2EToolStripMenuItem.Text = "BSIT2E"
-        ' 
-        ' TheReunionGameToolStripMenuItem
-        ' 
-        TheReunionGameToolStripMenuItem.Name = "TheReunionGameToolStripMenuItem"
-        TheReunionGameToolStripMenuItem.Size = New Size(207, 22)
-        TheReunionGameToolStripMenuItem.Text = "The Reunion Game"
         ' 
         ' Form1
         ' 
@@ -345,5 +360,7 @@ Partial Class Form1
     Friend WithEvents MonthToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents TheRoyalRoadDilemmaToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents TheReunionGameToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ControlSampleToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents TextPropertiesManipulatorToolStripMenuItem As ToolStripMenuItem
 
 End Class
