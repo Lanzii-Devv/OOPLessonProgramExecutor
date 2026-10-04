@@ -22,6 +22,7 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         MenuStrip1 = New MenuStrip()
         LessonsToolStripMenuItem = New ToolStripMenuItem()
         IntroductionToOOPToolStripMenuItem = New ToolStripMenuItem()
@@ -57,28 +58,33 @@ Partial Class Form1
         AnimationToolStripMenuItem = New ToolStripMenuItem()
         TheRoyalRoadDilemmaToolStripMenuItem = New ToolStripMenuItem()
         TheReunionGameToolStripMenuItem = New ToolStripMenuItem()
+        ConquerTheLandsToolStripMenuItem = New ToolStripMenuItem()
         ExitToolStripMenuItem = New ToolStripMenuItem()
         ExitToolStripMenuItem1 = New ToolStripMenuItem()
         HelpToolStripMenuItem = New ToolStripMenuItem()
         BSIT2EToolStripMenuItem = New ToolStripMenuItem()
-        ConquerTheLandsToolStripMenuItem = New ToolStripMenuItem()
         MenuStrip1.SuspendLayout()
         SuspendLayout()
         ' 
         ' MenuStrip1
         ' 
+        MenuStrip1.BackColor = Color.MediumSlateBlue
         MenuStrip1.Items.AddRange(New ToolStripItem() {LessonsToolStripMenuItem, HelpToolStripMenuItem, BSIT2EToolStripMenuItem})
         MenuStrip1.Location = New Point(0, 0)
         MenuStrip1.Name = "MenuStrip1"
-        MenuStrip1.Size = New Size(1362, 24)
+        MenuStrip1.Padding = New Padding(5, 5, 0, 5)
+        MenuStrip1.Size = New Size(1362, 29)
         MenuStrip1.TabIndex = 0
         MenuStrip1.Text = "MenuStrip1"
         ' 
         ' LessonsToolStripMenuItem
         ' 
+        LessonsToolStripMenuItem.BackColor = Color.GhostWhite
         LessonsToolStripMenuItem.DropDownItems.AddRange(New ToolStripItem() {IntroductionToOOPToolStripMenuItem, IntroductionToOOPToolStripMenuItem1, GettingStartedWithMicrosoftVisualBasicNETToolStripMenuItem, PlanningApplicationsAndDesigningInterfacesToolStripMenuItem, DataHandlingToolStripMenuItem, CodingWithVariablesNameConstantsAndCalculationsToolStripMenuItem, ArraysToolStripMenuItem, WorkingWithControlsAndPropertiesToolStripMenuItem, MidtermExaminationsToolStripMenuItem, DebuggingAndTracingToolStripMenuItem, WorkingWithNETFrameworkAndMDIToolStripMenuItem, WorkingWithNETFrameworkAndMDIToolStripMenuItem1, DatabaseConnectionToolStripMenuItem, DevelopingDataDrivenApplicationToolStripMenuItem, DevelopingDataDrivenApplicationToolStripMenuItem1, PresentationToolStripMenuItem, PresentationToolStripMenuItem1, FinalExaminationToolStripMenuItem, AnimationToolStripMenuItem, ExitToolStripMenuItem, ExitToolStripMenuItem1})
+        LessonsToolStripMenuItem.ForeColor = Color.Black
+        LessonsToolStripMenuItem.Margin = New Padding(0, 0, 5, 0)
         LessonsToolStripMenuItem.Name = "LessonsToolStripMenuItem"
-        LessonsToolStripMenuItem.Size = New Size(60, 20)
+        LessonsToolStripMenuItem.Size = New Size(60, 19)
         LessonsToolStripMenuItem.Text = "Lessons"
         ' 
         ' IntroductionToOOPToolStripMenuItem
@@ -285,6 +291,12 @@ Partial Class Form1
         TheReunionGameToolStripMenuItem.Size = New Size(207, 22)
         TheReunionGameToolStripMenuItem.Text = "The Reunion Game"
         ' 
+        ' ConquerTheLandsToolStripMenuItem
+        ' 
+        ConquerTheLandsToolStripMenuItem.Name = "ConquerTheLandsToolStripMenuItem"
+        ConquerTheLandsToolStripMenuItem.Size = New Size(207, 22)
+        ConquerTheLandsToolStripMenuItem.Text = "Conquer The lands"
+        ' 
         ' ExitToolStripMenuItem
         ' 
         ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
@@ -299,30 +311,32 @@ Partial Class Form1
         ' 
         ' HelpToolStripMenuItem
         ' 
+        HelpToolStripMenuItem.BackColor = Color.GhostWhite
+        HelpToolStripMenuItem.ForeColor = Color.Black
+        HelpToolStripMenuItem.Margin = New Padding(0, 0, 5, 0)
         HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-        HelpToolStripMenuItem.Size = New Size(44, 20)
+        HelpToolStripMenuItem.Size = New Size(44, 19)
         HelpToolStripMenuItem.Text = "Help"
         ' 
         ' BSIT2EToolStripMenuItem
         ' 
+        BSIT2EToolStripMenuItem.BackColor = Color.GhostWhite
+        BSIT2EToolStripMenuItem.ForeColor = Color.Black
         BSIT2EToolStripMenuItem.Name = "BSIT2EToolStripMenuItem"
-        BSIT2EToolStripMenuItem.Size = New Size(54, 20)
+        BSIT2EToolStripMenuItem.Size = New Size(54, 19)
         BSIT2EToolStripMenuItem.Text = "BSIT2E"
         ' 
-        ' ConquerTheLandsToolStripMenuItem
-        ' 
-        ConquerTheLandsToolStripMenuItem.Name = "ConquerTheLandsToolStripMenuItem"
-        ConquerTheLandsToolStripMenuItem.Size = New Size(207, 22)
-        ConquerTheLandsToolStripMenuItem.Text = "Conquer The lands"
-        ' 
-        ' ConquerTheLands
+        ' Form1
         ' 
         AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(1362, 899)
+        AutoSize = True
+        BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), Image)
+        BackgroundImageLayout = ImageLayout.Zoom
+        ClientSize = New Size(1362, 772)
         Controls.Add(MenuStrip1)
         MainMenuStrip = MenuStrip1
-        Name = "ConquerTheLands"
+        Name = "Form1"
         Text = "Form1"
         MenuStrip1.ResumeLayout(False)
         MenuStrip1.PerformLayout()
