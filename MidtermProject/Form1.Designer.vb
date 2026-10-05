@@ -45,6 +45,7 @@ Partial Class Form1
         WorkingWithControlsAndPropertiesToolStripMenuItem = New ToolStripMenuItem()
         ControlSampleToolStripMenuItem = New ToolStripMenuItem()
         TextPropertiesManipulatorToolStripMenuItem = New ToolStripMenuItem()
+        ExcessiveControlsToolStripMenuItem = New ToolStripMenuItem()
         MidtermExaminationsToolStripMenuItem = New ToolStripMenuItem()
         DebuggingAndTracingToolStripMenuItem = New ToolStripMenuItem()
         WorkingWithNETFrameworkAndMDIToolStripMenuItem = New ToolStripMenuItem()
@@ -195,7 +196,7 @@ Partial Class Form1
         ' 
         ' WorkingWithControlsAndPropertiesToolStripMenuItem
         ' 
-        WorkingWithControlsAndPropertiesToolStripMenuItem.DropDownItems.AddRange(New ToolStripItem() {ControlSampleToolStripMenuItem, TextPropertiesManipulatorToolStripMenuItem})
+        WorkingWithControlsAndPropertiesToolStripMenuItem.DropDownItems.AddRange(New ToolStripItem() {ControlSampleToolStripMenuItem, TextPropertiesManipulatorToolStripMenuItem, ExcessiveControlsToolStripMenuItem})
         WorkingWithControlsAndPropertiesToolStripMenuItem.Name = "WorkingWithControlsAndPropertiesToolStripMenuItem"
         WorkingWithControlsAndPropertiesToolStripMenuItem.Size = New Size(384, 34)
         WorkingWithControlsAndPropertiesToolStripMenuItem.Text = "8. Working With Controls and Properties"
@@ -211,6 +212,12 @@ Partial Class Form1
         TextPropertiesManipulatorToolStripMenuItem.Name = "TextPropertiesManipulatorToolStripMenuItem"
         TextPropertiesManipulatorToolStripMenuItem.Size = New Size(219, 22)
         TextPropertiesManipulatorToolStripMenuItem.Text = "Text Properties Manipulator"
+        ' 
+        ' ExcessiveControlsToolStripMenuItem
+        ' 
+        ExcessiveControlsToolStripMenuItem.Name = "ExcessiveControlsToolStripMenuItem"
+        ExcessiveControlsToolStripMenuItem.Size = New Size(219, 22)
+        ExcessiveControlsToolStripMenuItem.Text = "Excessive Controls"
         ' 
         ' MidtermExaminationsToolStripMenuItem
         ' 
@@ -328,7 +335,7 @@ Partial Class Form1
         ' 
         ' Form1
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         AutoSize = True
         BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), Image)
@@ -337,7 +344,7 @@ Partial Class Form1
         Controls.Add(MenuStrip1)
         MainMenuStrip = MenuStrip1
         Name = "Form1"
-        Text = "Form1"
+        Text = "PF-101 Object Oriented Programming      ABANICO, LANZ ANDRE L.          SBIT-2E"
         MenuStrip1.ResumeLayout(False)
         MenuStrip1.PerformLayout()
         ResumeLayout(False)
@@ -384,5 +391,6 @@ Partial Class Form1
     Friend WithEvents ControlSampleToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents TextPropertiesManipulatorToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ConquerTheLandsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ExcessiveControlsToolStripMenuItem As ToolStripMenuItem
 
 End Class

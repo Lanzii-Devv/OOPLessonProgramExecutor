@@ -135,4 +135,11 @@
         Lesson.Show()
 
     End Sub
+
+    Private Sub ExcessiveControlsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExcessiveControlsToolStripMenuItem.Click
+
+        Dim Lesson As New ExcessiveControls()
+        Lesson.Show()
+
+    End Sub
 End Class
